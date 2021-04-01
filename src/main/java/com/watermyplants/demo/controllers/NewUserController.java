@@ -23,37 +23,37 @@ import java.util.ArrayList;
 
 @RestController
 public class NewUserController {
-    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
-
-    @PostMapping(value = "/createnewuser",
-        consumes = {"application/json"},
-        produces = {"application/json"})
-    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
-    @RequestBody
-        User newuser) throws URISyntaxException {
-        logger.trace(request.getMethod()
-            .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        ArrayList<UserRoles> newRoles = new ArrayList<>();
-        newRoles.add(new UserRoles(newuser, roleService.findByName("user")));
-        newuser.setUserRoles(newRoles);
-
-        newuser = userService.save(newuser);
-
-        // set the location header for the newly created resource - to another controller!
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newRestaurantURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
-            .buildAndExpand(newuser.getUserid())
-            .toUri();
-        responseHeaders.setLocation(newRestaurantURI);
-
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private RoleService roleService;
+//
+//    @PostMapping(value = "/createnewuser",
+//        consumes = {"application/json"},
+//        produces = {"application/json"})
+//    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
+//    @RequestBody
+//        User newuser) throws URISyntaxException {
+//        logger.trace(request.getMethod()
+//            .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+//        ArrayList<UserRoles> newRoles = new ArrayList<>();
+//        newRoles.add(new UserRoles(newuser, roleService.findByName("user")));
+//        newuser.setUserRoles(newRoles);
+//
+//        newuser = userService.save(newuser);
+//
+//        // set the location header for the newly created resource - to another controller!
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newRestaurantURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
+//            .buildAndExpand(newuser.getUserid())
+//            .toUri();
+//        responseHeaders.setLocation(newRestaurantURI);
+//
+//        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+//    }
 
 }

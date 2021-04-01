@@ -2,7 +2,6 @@ package com.watermyplants.demo.controllers;
 
 import com.watermyplants.demo.models.ErrorDetail;
 import com.watermyplants.demo.models.Plant;
-import com.watermyplants.demo.models.ReturnPlant;
 import com.watermyplants.demo.services.PlantService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;

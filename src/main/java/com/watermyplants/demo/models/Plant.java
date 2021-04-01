@@ -1,47 +1,80 @@
 package com.watermyplants.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
+@ApiModel(value = "Plants", description = "Plants for the user")
 @Entity
 @Table(name = "plants")
 public class Plant extends Auditable
 {
+    @ApiModelProperty(name = "plantsid",
+        value = "Primary Key for the Plant",
+        required = true,
+        example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long plantsid;
 
+    @ApiModelProperty(name = "species",
+        value = "Species of the Plant",
+        required = true,
+        example = "sunflower")
     @Column(nullable = false)
     private String species;
 
+    @ApiModelProperty(name = "name",
+        value = "The name you as the User give the plant",
+        required = true,
+        example = "sunny")
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String time;
-
+    @ApiModelProperty(name = "location",
+        value = "Location the plant is at",
+        required = true,
+        example = "Living Room")
     @Column(nullable = false)
     private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
         nullable = false)
-    @JsonIgnoreProperties({"plants", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"plants", "hibernateLazyInitializer" })
     private User user;
 
-    public Plant()
-    {
+    @ApiModelProperty(name = "schedule",
+        value = "Schedule when to water your plant (days per week)",
+        required = true,
+        example = "3")
+    @Column(nullable = false)
+    private int schedule;
+
+    public Plant() {
     }
 
-    public Plant(String species, String name, String time, String location, User user) {
+    public Plant(String name)
+    {
+        this.name = name;
+    }
+
+    public Plant(String species, String name, String location, User user, int schedule) {
         this.species = species;
         this.name = name;
-        this.time = time;
         this.location = location;
         this.user = user;
+        this.schedule = schedule;
+    }
+
+    public int getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(int schedule) {
+        this.schedule = schedule;
     }
 
     public Plant(long plantsid, User currentUser) {
@@ -70,14 +103,6 @@ public class Plant extends Auditable
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getLocation() {
